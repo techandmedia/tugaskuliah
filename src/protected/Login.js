@@ -84,6 +84,7 @@ class Login extends React.Component {
 export { AuthButton, Login, PrivateRoute };
 
 const Welcome = styled.div`
-  text-align: center;
+  text-align: right;
+  margin-right: 30px;
   line-height: 0.3rem;
 `;

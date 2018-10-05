@@ -1,16 +1,14 @@
 import React from 'react';
-import styled, { createGlobalStyle, css } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 
 import Public from './public/Public';
 import Protected from './protected/Protected';
 import HomePage from './public/Homepage';
-import { AuthButton, Login, PrivateRoute} from './protected/Login';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import { AuthButton, Login, PrivateRoute } from './protected/Login';
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 /////  React Router v4 /////
 // https://reacttraining.com/react-router/web/example/auth-workflow
@@ -24,21 +22,7 @@ const App = () => (
     <React.Fragment>
       <GlobalStyle />
 
-      <NavWrapper>
-        <NavLeft>
-          <StyledLink to="/">Home</StyledLink>
-        </NavLeft>
-
-        <NavRight>
-          <StyledLink to="/protected">Protected Page</StyledLink>
-        </NavRight>
-        <NavRight>
-          <StyledLink to="/protected">Protected Page</StyledLink>
-        </NavRight>
-        <NavRight>
-          <StyledLink to="/public">Public Page</StyledLink>
-        </NavRight>
-      </NavWrapper>
+      <Header/>
 
       <AuthButton />
 
@@ -46,6 +30,8 @@ const App = () => (
       <Route path="/public" component={Public} />
       <Route path="/login" component={Login} />
       <PrivateRoute path="/protected" component={Protected} />
+
+      <Footer />
     </React.Fragment>
   </Router>
 );
@@ -84,6 +70,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: yellow;
+    font-size: 14px;
     ${media.desktop`background: dodgerblue;`}
     ${media.tablet`background: mediumseagreen;`}
     ${media.phone`background: palevioletred;`}
@@ -98,44 +85,4 @@ const GlobalStyle = createGlobalStyle`
       background-color: palevioletred;
     }  
   } */
-`;
-
-const NavWrapper = styled.ul`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  /* width: 25%; */
-  background-color: #333;
-  /* height: 100%; Full height */
-  /* position: fixed; /* Make it stick, even on scroll */
-  overflow: auto; /* Auto for Enable scrolling if the sidenav has too much content */
-`;
-
-const NavLeft = styled.li`
-  float: left;
-  margin-left: 30px;
-  /* Entah kenapa desktop ngga bisa */
-  /* ${media.desktop`margin-left: 30px;`} */
-  ${media.tablet`margin-left: 10px;`}
-  ${media.phone`margin-left: 0px;`}
-`;
-
-const NavRight = styled.li`
-  float: right;
-`;
-
-const StyledLink = styled(Link)`
-  display: block;
-  color: palevioletred;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  :hover {
-    background-color: #111;
-  }
-`;
-
-const Welcome = styled.div`
-  text-align: center;
-  line-height: 0.3rem;
 `;
