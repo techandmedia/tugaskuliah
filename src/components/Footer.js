@@ -1,8 +1,9 @@
 import React from 'react';
+import config from '../config/SiteConfig';
 
 const Footer = () => {
   return(
-    <p>Copyright Eko Andri S 2018</p>
+    <p>{config.copyright}</p>
   )
 }
 

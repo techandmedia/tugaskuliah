@@ -1,24 +1,27 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
-import config from '../config/SiteConfig';
 import img1 from '../img/school-1.jpg';
 
-const HomePage = () => {
+const Akademik = () => {
   return (
     <React.Fragment>
       <Helmet>
-        <meta name="description" content={config.siteDescription} />
-        <title>{config.siteTitle}</title>
-        <link rel="canonical" href="http://localhost:3000" />
+        <meta
+          charSet="utf-8"
+          name="Sekolah Tinggi Manajemen Informatika Swadharma"
+          content="Kuliah hemat hebat"
+        />
+        <title>Akademik STMIK Swadharma</title>
+        <link rel="canonical" href="https://tugaskuliah.subarnanto.com/" />
       </Helmet>
-      <h3>Home</h3>
+      <h3>Akademik</h3>
       <Image src={img1} alt="tes" />
     </React.Fragment>
   );
 };
 
-export default HomePage;
+export default Akademik;
 
 const Image = styled.img`
   display: block;

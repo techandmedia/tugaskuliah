@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -7,21 +6,10 @@ const Header = () => {
   return (
     <NavWrapper>
       <NavLeft>
-        <StyledLink to="/">
-          <Helmet>
-            <meta
-              charSet="utf-8"
-              name="Sekolah Tinggi Manajemen Informatika Swadharma"
-              content="Kuliah hemat hebat"
-            />
-            <title>STMIK Swadharma</title>
-            <link rel="canonical" href="https://tugaskuliah.subarnanto.com/" />
-          </Helmet>
-          STMIK Swadharma
-        </StyledLink>
+        <StyledLink to="/">STMIK Swadharma</StyledLink>
       </NavLeft>
       <NavLeft>
-        <StyledLink to="/">Program Akademik</StyledLink>
+        <StyledLink to="/Akademik">Program Akademik</StyledLink>
       </NavLeft>
       <NavLeft>
         <StyledLink to="/">Tentang Swadharma</StyledLink>
