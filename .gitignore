@@ -10,7 +10,6 @@ coverage
 build
 
 src/config
-src/tes
 
 # misc
 .DS_Store
