@@ -10,6 +10,7 @@ coverage
 build
 
 src/config
+src/.tmp.drivedownload
 
 # misc
 .DS_Store
@@ -21,3 +22,5 @@ src/config
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.env
