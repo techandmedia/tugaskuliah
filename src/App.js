@@ -1,14 +1,65 @@
 import React from 'react';
+import Loadable from 'react-loadable';
 import { createGlobalStyle, css } from 'styled-components';
 
-import Public from './public/Public';
-import Protected from './protected/Protected';
-import HomePage from './public/Homepage';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import { AuthButton, Login, PrivateRoute } from './protected/Login';
+import Loading from './components/Loading';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+// React Loadable
+// https://github.com/jamiebuilds/react-loadable
+
+const LoadableHome = Loadable({
+  loader: () => import('./public/Homepage'),
+  loading: Loading,
+});
+
+const LoadablePublic = Loadable({
+  loader: () => import('./public/Public'),
+  loading: Loading
+});
+
+const LoadableProtected = Loadable({
+  loader: () => import('./protected/Protected'),
+  loading: Loading
+});
+
+const LoadableAuthButton = Loadable({
+  loader: () => import('./protected/Login'),
+  render(loaded, props) {
+    let AuthButton = loaded.AuthButton;
+    return <AuthButton {...props}/>;
+  },
+  loading: Loading
+});
+
+const LoadableLogin = Loadable({
+  loader: () => import('./protected/Login'),
+  render(loaded, props) {
+    let Login = loaded.Login;
+    return <Login {...props}/>;
+  },
+  loading: Loading
+});
+
+const LoadablePrivateRoute = Loadable({
+  loader: () => import('./protected/Login'),
+  render(loaded, props) {
+    let PrivateRoute = loaded.PrivateRoute;
+    return <PrivateRoute {...props}/>;
+  },
+  loading: Loading
+});
+
+const LoadableHeader = Loadable({
+  loader: () => import('./components/Header'),
+  loading: Loading
+});
+
+const LoadableFooter = Loadable({
+  loader: () => import('./components/Footer'),
+  loading: Loading
+});
 
 /////  React Router v4 /////
 // https://reacttraining.com/react-router/web/example/auth-workflow
@@ -22,16 +73,16 @@ const App = () => (
     <React.Fragment>
       <GlobalStyle />
 
-      <Header/>
+      <LoadableHeader />
 
-      <AuthButton />
+      <LoadableAuthButton />
 
-      <Route exact path="/" component={HomePage} />
-      <Route path="/public" component={Public} />
-      <Route path="/login" component={Login} />
-      <PrivateRoute path="/protected" component={Protected} />
+      <Route exact path="/" component={LoadableHome} />
+      <Route path="/public" component={LoadablePublic} />
+      <Route path="/login" component={LoadableLogin} />
+      <LoadablePrivateRoute path="/protected" component={LoadableProtected} />
 
-      <Footer />
+      <LoadableFooter />
     </React.Fragment>
   </Router>
 );
@@ -41,7 +92,7 @@ export default App;
 // Styled Components - Untuk mempermudah pembuatan media query berdasarkan ukuran layar//
 // https://www.styled-components.com/docs/advanced#media-templates
 
-// Define screen size
+// Define screen size - Tentukan ukuran layar
 const sizes = {
   desktop: 992,
   tablet: 768,
