@@ -33,7 +33,9 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route path="/Akademik" component={Academic} />
       <Route path="/login" component={Login} />
-      <PrivateRoute path="/protected" component={Protected} />
+      <PrivateRoute path="/mahasiswa" component={Protected} />
+      <PrivateRoute path="/admin" component={Protected} />
+      <PrivateRoute path="/dosen" component={Protected} />
 
       <Footer />
 

@@ -16,13 +16,13 @@ const Header = () => {
       </NavLeft>
 
       <NavRight>
-        <StyledLink to="/protected">Protected Page</StyledLink>
+        <StyledLink to="/mahasiswa">Mahasiswa</StyledLink>
       </NavRight>
       <NavRight>
-        <StyledLink to="/protected">Protected Page</StyledLink>
+        <StyledLink to="/dosen">Dosen</StyledLink>
       </NavRight>
       <NavRight>
-        <StyledLink to="/public">Public Page</StyledLink>
+        <StyledLink to="/admin">Admin</StyledLink>
       </NavRight>
     </NavWrapper>
   );

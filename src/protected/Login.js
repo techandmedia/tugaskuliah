@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import Button from '../components/shared/Button';
+import UserLogin from './UserLogin';
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -19,13 +21,14 @@ const AuthButton = withRouter(
     fakeAuth.isAuthenticated ? (
       <p>
         Welcome!{' '}
-        <button
+        <Button
+          logout
           onClick={() => {
             fakeAuth.signout(() => history.push('/'));
           }}
         >
-          Sign out
-        </button>
+          Log out
+        </Button>
       </p>
     ) : (
       <Welcome>
@@ -74,8 +77,13 @@ class Login extends React.Component {
 
     return (
       <div>
-        <p>You must log in to view the page at {from.pathname}</p>
-        <button onClick={this.login}>Log in</button>
+        <View>Anda harus log in untuk melihat halaman ({from.pathname})</View>
+        <UserLogin />
+        <Card>
+          <Button logout onClick={this.login}>
+            Log in
+          </Button>
+        </Card>
       </div>
     );
   }
@@ -88,3 +96,17 @@ const Welcome = styled.div`
   margin-right: 30px;
   line-height: 0.3rem;
 `;
+
+const Card = styled.div`
+margin-top: 1em;
+text-align: center;
+
+  /* display: flex; */
+`;
+
+const View = styled.p`
+  text-align: center;
+  margin: 2em 0 0.5em 0;
+  font-size: 18px;
+  font-weight: bold;
+`
