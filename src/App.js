@@ -1,13 +1,15 @@
 import React from 'react';
 import { createGlobalStyle, css } from 'styled-components';
 
-import { Header,
-  Footer,
-  Home,
-  Academic,
-  Protected,
-  Login,
+import { Academic,
+  Admin,
   AuthButton,
+  Dosen,
+  Footer,
+  Header,
+  Home,
+  Login,
+  Mahasiswa,
   PrivateRoute } from './config/Loadable';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -33,9 +35,9 @@ const App = () => (
       <Route exact path="/" component={Home} />
       <Route path="/Akademik" component={Academic} />
       <Route path="/login" component={Login} />
-      <PrivateRoute path="/mahasiswa" component={Protected} />
-      <PrivateRoute path="/admin" component={Protected} />
-      <PrivateRoute path="/dosen" component={Protected} />
+      <PrivateRoute path="/mahasiswa" component={Mahasiswa} />
+      <PrivateRoute path="/admin" component={Admin} />
+      <PrivateRoute path="/dosen" component={Dosen} />
 
       <Footer />
 
