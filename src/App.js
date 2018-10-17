@@ -1,7 +1,9 @@
 import React from 'react';
 import { createGlobalStyle, css } from 'styled-components';
 
-import { Academic,
+import { 
+  About,
+  Academic,
   Admin,
   AuthButton,
   Dosen,
@@ -33,6 +35,7 @@ const App = () => (
       <AuthButton />
 
       <Route exact path="/" component={Home} />
+      <Route path="/About" component={About} />
       <Route path="/Akademik" component={Academic} />
       <Route path="/login" component={Login} />
       <PrivateRoute path="/mahasiswa" component={Mahasiswa} />

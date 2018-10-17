@@ -12,7 +12,7 @@ const Header = () => {
         <StyledLink to="/Akademik">Program Akademik</StyledLink>
       </NavLeft>
       <NavLeft>
-        <StyledLink to="/">Tentang Swadharma</StyledLink>
+        <StyledLink to="/About">Tentang Swadharma</StyledLink>
       </NavLeft>
 
       <NavRight>
