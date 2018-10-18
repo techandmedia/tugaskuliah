@@ -1,0 +1,36 @@
+body {
+  /* height: 100vh; */
+  background: linear-gradient(to right, #096dd9 , #1890ff);
+  color: white;
+  line-height: 1;
+}
+
+ul {
+  position: absolute;
+  padding: 10px;
+   /*z-index: 10; */
+  top: 2%;
+  right: 8%; 
+  list-style: none;
+  display: flex;
+  /* flex-direction: row; */
+  /* justify-content: flex-end; */
+  /* align-content: flex-end; */
+  /* justify-content: space-around; */
+}
+
+.link {
+  margin-left: 50px;
+  font-size: 16px;
+  color: white;
+}
+
+h1 {
+  font-family: Quicksand;
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+  /* position: absolute; */
+
+}
