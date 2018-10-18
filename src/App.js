@@ -42,6 +42,8 @@ const App = () => (
       <PrivateRoute path="/admin" component={Admin} />
       <PrivateRoute path="/dosen" component={Dosen} />
 
+      <div>Tes</div>
+
       <Footer />
 
     </React.Fragment>
