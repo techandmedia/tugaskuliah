@@ -6,6 +6,7 @@ const cors = require("cors");
 const contactRoute = require("./routes/route-contact");
 const employeeRoute = require("./routes/route-employee");
 const productRoute = require("./routes/route-product");
+const userRoute = require("./routes/route-user");
 
 server.use(compression());
 server.use(express.static("public"));
@@ -18,8 +19,9 @@ server.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 5000;
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
-
+// const baseURL = "/api/"
 // perhatikan pemakaian route, di sini api nya adalah '/api/contacts', sedangkan di file route nya adalah '/'
 server.use(contactRoute);
 server.use(employeeRoute);
 server.use(productRoute);
+server.use(userRoute);
