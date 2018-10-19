@@ -1,6 +1,7 @@
 import logo200Image from 'assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
+import axios from 'axios';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 
 class AuthForm extends React.Component {
@@ -22,17 +23,55 @@ class AuthForm extends React.Component {
 
   changeAuthState = authState => event => {
     event.preventDefault();
-
     this.props.onChangeAuthState(authState);
   };
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    })
+    // console.log(this.state.email);
+    // console.log(this.state.password);
+  }
 
   handleSubmit = event => {
     event.preventDefault();
     if (this.isLogin) {
-      console.log("Login")
+      if (this.state.email == null) {
+        console.log("Can't be empty")
+      } else {
+        axios.post('api/users/login',
+          {
+            email: this.state.email,
+            password: this.state.password
+          })
+          .then(res => {
+            this.setState({ code: res.data.code })
+            console.log("res", res);
+            console.log("data", res.data);
+            console.log("status", this.state.code);
+          })
+        console.log("Login");
+      }
     } else {
-      console.log("Sign Up");
+      axios.post('api/users/new',
+        {
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          role: this.state.role,
+          email: this.state.email,
+          password: this.state.password
+        })
+        .then(res => {
+          console.log("res", res);
+          console.log("data", res.data);
+          console.log("status", res.data.status);
+        })
+      // console.log("Sign Up");
     }
+    // function success() {
+    //   this.props.history.push('/');
+    // }
   };
 
   renderButtonText() {
@@ -62,14 +101,15 @@ class AuthForm extends React.Component {
       usernameInputProps,
       passwordLabel,
       passwordInputProps,
-      confirmPasswordLabel,
-      confirmPasswordInputProps,
+      // confirmPasswordLabel,
+      // confirmPasswordInputProps,
       children,
       onLogoClick,
+      onFormSubmit
     } = this.props;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={onFormSubmit}>
         {showLogo && (
           <div className="text-center pb-4">
             <img
@@ -83,30 +123,30 @@ class AuthForm extends React.Component {
         )}
         {this.isSignup && (<FormGroup>
           <Label for={firstnameLabel}>{firstnameLabel}</Label>
-          <Input id="first" {...firstnameInputProps} />
+          <Input id="first" onChange={this.handleChange} {...firstnameInputProps} />
         </FormGroup>)}
         {this.isSignup && (<FormGroup>
           <Label for={lastnameLabel}>{lastnameLabel}</Label>
-          <Input {...lastnameInputProps} />
+          <Input id="last" onChange={this.handleChange} {...lastnameInputProps} />
         </FormGroup>)}
         {this.isSignup && (<FormGroup>
           <Label for={roleLabel}>{roleLabel}</Label>
-          <Input {...roleInputProps} />
+          <Input id="role" onChange={this.handleChange} {...roleInputProps} />
         </FormGroup>)}
         <FormGroup>
           <Label for={usernameLabel}>{usernameLabel}</Label>
-          <Input {...usernameInputProps} />
+          <Input id="email" onChange={this.handleChange} {...usernameInputProps} />
         </FormGroup>
         <FormGroup>
           <Label for={passwordLabel}>{passwordLabel}</Label>
-          <Input {...passwordInputProps} />
+          <Input id="password" onChange={this.handleChange} {...passwordInputProps} />
         </FormGroup>
-        {this.isSignup && (
+        {/* {this.isSignup && (
           <FormGroup>
             <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
             <Input {...confirmPasswordInputProps} />
           </FormGroup>
-        )}
+        )} */}
         {/* <FormGroup check>
           <Label check>
             <Input type="checkbox" />{' '}
@@ -163,6 +203,7 @@ AuthForm.propTypes = {
   confirmPasswordLabel: PropTypes.string,
   confirmPasswordInputProps: PropTypes.object,
   onLogoClick: PropTypes.func,
+  onFormSubmit: PropTypes.func
 };
 
 AuthForm.defaultProps = {
@@ -198,9 +239,8 @@ AuthForm.defaultProps = {
     type: 'password',
     placeholder: 'confirm your password',
   },
-  onLogoClick: () => {
-    console.log("tes")
-   },
+  onLogoClick: () => { },
+  onFormSubmit: () => { }
 };
 
 export default AuthForm;
