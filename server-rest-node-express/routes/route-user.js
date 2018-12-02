@@ -2,44 +2,39 @@ const express = require("express");
 const router = express.Router();
 const mySQL = require("../config/config-MySQL");
 
-// exports.getHome = router.get("/api/users", (req, res) => {
-//   mySQL.query("SELECT * from users", (err, results) => {
-//     if (err) console.log(err);
-//     res.send("Welcome to the API - 123");
-//   });
-// });
-
 exports.login = router.post("/api/users/login", (req, res) => {
   var email = req.body.email;
   var password = req.body.password;
 
-  mySQL.query('SELECT * FROM users WHERE email = ?', [email], function (error, results, fields) {
+  mySQL.query("SELECT * FROM users WHERE email = ?", [email], function(
+    error,
+    results,
+    fields
+  ) {
     if (error) {
-      // console.log("error ocurred",error);
       res.send({
-        "code": 400,
-        "failed": "error ocurred"
-      })
+        code: 400,
+        failed: "error ocurred"
+      });
     } else {
-      // console.log('The solution is: ', results);
       if (results.length > 0) {
-        if (results[0].password == password) {
+        if (results[0].password === password) {
+          console.log(JSON.stringify(results));
+          res.send(JSON.stringify(results));
+          // res.send({
+          //   code: 200,
+          //   success: "login sucessfull"
+          // });
+        } else {
           res.send({
-            "code": 200,
-            "success": "login sucessfull"
+            code: 204,
+            success: "Email and password does not match"
           });
         }
-        else {
-          res.send({
-            "code": 204,
-            "success": "Email and password does not match"
-          });
-        }
-      }
-      else {
+      } else {
         res.send({
-          "code": 204,
-          "success": "Email does not exits"
+          code: 205,
+          success: "Email does not exits"
         });
       }
     }
@@ -53,20 +48,32 @@ exports.getAllContacts = router.get("/api/users", (req, res) => {
   });
 });
 
-exports.getSortedContact = router.get("/api/users/ordered", (req, res) => {
+exports.getUserEmail = router.get("/api/users/email/:email", (req, res) => {
+  var email = req.params.email;
+
   mySQL.query(
-    "SELECT * FROM `users` ORDER BY `fullname`",
-    (err, results) => {
-      if (err) console.log(err);
-      res.send(JSON.stringify(results));
+    "SELECT * from users where email=?",
+    [email],
+    (err, results, fields) => {
+      if (err) {
+        res.send(JSON.stringify(results));
+      }
     }
   );
 });
 
-exports.getContactByID = router.get("/api/users/:id", (req, res) => {
+exports.getSortedContact = router.get("/api/users/ordered", (req, res) => {
+  mySQL.query("SELECT * FROM `users` ORDER BY `fullname`", (err, results) => {
+    if (err) console.log(err);
+    res.send(JSON.stringify(results));
+  });
+});
+
+exports.getContactByID = router.get("/api/users/id/:id", (req, res) => {
+  var id = req.params.id;
   mySQL.query(
     "SELECT * from users where id=?",
-    [req.params.id],
+    [id],
     (err, results, fields) => {
       if (err) console.log(err);
       res.end(JSON.stringify(results));
@@ -77,58 +84,100 @@ exports.getContactByID = router.get("/api/users/:id", (req, res) => {
 exports.putContact = router.put("/api/users/update/:id", (req, res) => {
   const putData = req.body;
   const idToPutData = req.params.id;
-  mySQL.query("UPDATE `users` SET `userid=?`, `fullname`=?, `usergroup=?`, `emailid`=?, `mobile`=?, `title`=?, `pp=?`, WHERE id=?",
-    [putData.userid, putData.fullname, putData.usergroup, putData.emailid, putData.mobile, putData.title, putData.pp, idToPutData],
+  mySQL.query(
+    "UPDATE `users` SET `userid=?`, `fullname`=?, `usergroup=?`, `emailid`=?, `mobile`=?, `title`=?, `pp=?`, WHERE id=?",
+    [
+      putData.userid,
+      putData.fullname,
+      putData.usergroup,
+      putData.emailid,
+      putData.mobile,
+      putData.title,
+      putData.pp,
+      idToPutData
+    ],
     (err, results, fields) => {
-      if (err) console.log(err);
-      // console.log(results.insertId);
-      res.end(JSON.stringify(results));
+      if (err)
+        // console.log(results.insertId);
+        res.end(JSON.stringify(results));
     }
   );
 });
 
+
+
 exports.postContact = router.post("/api/users/new", (req, res) => {
   var today = new Date();
   var users = {
-    "first_name": req.body.first_name,
-    "last_name": req.body.last_name,
-    "role": req.body.role,
-    "email": req.body.email,
-    "password": req.body.password,
-    "created": today,
-    "modified": today
-  }
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    role: req.body.role,
+    email: req.body.email,
+    password: req.body.password,
+    created: today,
+    modified: today
+  };
 
+  var first_name = req.body.first_name;
+  var last_name = req.body.last_name;
+  var role = req.body.role;
   var email = req.body.email;
+  var password = req.body.password;
 
-  mySQL.query('SELECT * FROM users WHERE email = ?', [email], function (err, results, fields) {
-    if (results.length > 0) {
-      if (results[0].email == email) {
+  console.log(req.body);
+
+  if (
+    first_name === "" || first_name === null ||
+    last_name == "" || last_name == null ||
+    role === "" || role === null ||
+    email === "" || email === null ||
+    password === "" || password === null
+  ) {
+    res.send({
+      code: 700,
+      status: "empty field",
+      message: "Input tidak boleh kosong"
+    });
+  } else {
+    mySQL.query("SELECT * FROM users WHERE email = ?", [email], function(
+      err,
+      results,
+      fields
+    ) {
+      if (err) {
         res.send({
-          "code": 204,
-          "status": 'Failed',
-          "message": "This email address is already registered, please login instead"
+          code: 400,
+          status: "Failed",
+          message: "Something wrong with the connection"
         });
-      }
-    }
-    else {
-      mySQL.query("INSERT INTO users SET ?", users,
-        (err, results, fields) => {
-          if (err)
+      } else {
+        if (results.length > 0) {
+          if (results[0].email == email) {
             res.send({
-              "code": 400,
-              "status": 'Failed',
-              "message": 'Something wrong with the connection'
-            })
-          res.send({
-            "code": 400,
-            "status": 'Success',
-            "message": 'User is successfully registered'
-          })
+              code: 204,
+              status: "Failed",
+              message:
+                "This email address is already registered, please login instead"
+            });
+          }
+        } else {
+          mySQL.query(
+            "INSERT INTO users SET ?",
+            users,
+            (err, results, fields) => {
+              console.log(users)
+              // res.send(JSON.stringify(results));
+              res.send({
+                code: 200,
+                status: "Success",
+                message: "User is successfully registered"
+              });
+            }
+          );
         }
-      );
-    }
-  });
+      }
+    });
+  }
 });
 
 module.exports = router;
